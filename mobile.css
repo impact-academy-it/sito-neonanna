@@ -1,0 +1,105 @@
+/* Responsive fixes for mobile/tablet. Pages are inline-styled (desktop-first),
+   so overrides here use !important to win over inline style at narrow widths.
+   Note: the page's runtime re-serializes inline style attributes and adds a
+   space after each colon, so every attribute-substring selector below is
+   listed in both the "prop:value" and "prop: value" form to match either. */
+
+/* --- Collapsible mobile menu --- */
+.nav-toggle-checkbox { display: none; }
+.nav-toggle-label { display: none; }
+
+@media (max-width: 860px) {
+
+  /* header: logo + hamburger on one row, menu drops below when opened */
+  .site-header-row { flex-wrap: wrap; }
+  .site-logo { order: 1; }
+  .nav-toggle-label {
+    order: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-left: auto !important;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    color: #7d4438;
+    border-radius: 999px;
+  }
+  .nav-toggle-label:hover { background: var(--color-accent-100, #fbf2ee); }
+  .site-nav {
+    display: none !important;
+    order: 4;
+    flex: 1 1 100%;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 2px !important;
+    margin-left: 0 !important;
+    padding-top: 8px;
+  }
+  .nav-toggle-checkbox:checked ~ .site-nav { display: flex !important; }
+  .site-nav a, .site-nav span {
+    display: block;
+    width: 100%;
+    padding: 10px 4px;
+  }
+  .site-nav-cta {
+    display: none !important;
+    order: 5;
+    flex: 1 1 100%;
+    text-align: center;
+    margin-top: 8px;
+    margin-left: 0 !important;
+  }
+  .nav-toggle-checkbox:checked ~ .site-nav-cta { display: block !important; }
+
+  /* any multi-column grid stacks to a single column */
+  [style*="display:grid"],
+  [style*="display: grid"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* video testimonial grid: 2 columns reads better than 10 stacked tiles */
+  [style*="repeat(5, 1fr)"], [style*="repeat(5,1fr)"] {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* headings sized for desktop are too large on narrow screens */
+  h1 { font-size: 34px !important; line-height: 1.15 !important; }
+  h2 { font-size: 26px !important; line-height: 1.18 !important; }
+
+  /* oversized hero/portrait photos take too much vertical space on mobile */
+  img[style*="height:600px"], img[style*="height: 600px"] { height: 300px !important; }
+  img[style*="height:520px"], img[style*="height: 520px"] { height: 280px !important; }
+
+  /* press-logo strip forced a minimum width wider than the screen; flex:1's
+     0% basis was leaving it almost no room next to the paragraph beside it */
+  [style*="min-width:520px"], [style*="min-width: 520px"] {
+    min-width: 0 !important;
+    flex: 1 1 100% !important;
+  }
+
+  /* wide gaps between stat blocks / flex rows don't fit narrow screens */
+  [style*="gap:56px"], [style*="gap: 56px"],
+  [style*="gap:64px"], [style*="gap: 64px"] { gap: 24px !important; }
+  [style*="gap:48px"], [style*="gap: 48px"] { gap: 20px !important; }
+
+  /* section side padding of 40px leaves too little content width on mobile */
+  [style*="padding:0 40px"], [style*="padding: 0 40px"],
+  [style*="padding:10px 40px"], [style*="padding: 10px 40px"],
+  [style*="padding:14px 40px"], [style*="padding: 14px 40px"],
+  [style*="padding:34px 40px"], [style*="padding: 34px 40px"],
+  [style*="padding:38px 40px"], [style*="padding: 38px 40px"],
+  [style*="padding:40px"], [style*="padding: 40px"],
+  [style*="padding:48px 40px"], [style*="padding: 48px 40px"],
+  [style*="padding:64px 40px"], [style*="padding: 64px 40px"],
+  [style*="padding:72px 40px"], [style*="padding: 72px 40px"],
+  [style*="padding:80px 40px"], [style*="padding: 80px 40px"],
+  [style*="padding:88px 40px"], [style*="padding: 88px 40px"],
+  [style*="padding:96px 40px"], [style*="padding: 96px 40px"] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}

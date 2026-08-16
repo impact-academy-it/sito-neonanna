@@ -9,6 +9,7 @@
 <x-dc>
 <helmet>
 <link rel="stylesheet" href="_ds/organic-4025a648-f606-4133-8b17-8c0d12034af1/styles.css">
+<link rel="stylesheet" href="mobile.css">
 <script src="_ds/organic-4025a648-f606-4133-8b17-8c0d12034af1/_ds_bundle.js"></script>
 <script src="./image-slot.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -50,9 +51,11 @@
   </div>
 
   <header style="position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--color-bg) 92%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--color-divider)">
-    <div style="max-width:1240px;margin:0 auto;padding:14px 40px;display:flex;align-items:center;gap:32px">
-      <img src="assets/logo-neonanna.png" alt="NeoNanna" style="height:54px;width:auto">
-      <nav style="display:flex;gap:26px;margin-left:auto;font-size:15px;font-weight:600;align-items:center">
+    <div class="site-header-row" style="max-width:1240px;margin:0 auto;padding:14px 40px;display:flex;align-items:center;gap:32px">
+      <img class="site-logo" src="assets/logo-neonanna.png" alt="NeoNanna" style="height:54px;width:auto">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+      <label for="nav-toggle" class="nav-toggle-label" aria-label="Apri il menu">☰</label>
+      <nav class="site-nav" style="display:flex;gap:26px;margin-left:auto;font-size:15px;font-weight:600;align-items:center">
         <a href="#testimonianze" style="color:var(--color-text);text-decoration:none">Testimonianze</a>
         <a href="percorso.html" style="color:var(--color-text);text-decoration:none">Il percorso</a>
         <span style="display:flex;align-items:center;gap:5px;color:var(--color-text);cursor:default">NeoNanna
@@ -60,7 +63,7 @@
         </span>
         <a href="faq.html" style="color:var(--color-text);text-decoration:none">FAQ</a>
       </nav>
-      <a href="https://masterclass.neonanna.it" class="btn btn-primary" style="font-size:15px;border-radius:999px;padding:12px 22px;white-space:nowrap">Videolezioni gratuite</a>
+      <a href="https://masterclass.neonanna.it" class="btn btn-primary site-nav-cta" style="font-size:15px;border-radius:999px;padding:12px 22px;white-space:nowrap">Videolezioni gratuite</a>
     </div>
   </header>
 
@@ -95,7 +98,7 @@
 
   <section style="max-width:1240px;margin:0 auto;padding:88px 40px 0">
     <h2 style="font-size:40px;max-width:22ch;margin-bottom:16px">Se ti riconosci qui, <br>sei nel posto giusto</h2>
-    <p style="font-size: 18px; max-width: 52ch; color: var(--color-neutral-800); margin-bottom: 44px; width: 645px; height: 57px">Ogni famiglia arriva a me con la stessa frase: «<i>Abbiamo già provato di tutto</i>». Quasi sempre il problema non è il bambino. E nemmeno il genitore.<br>Il problema sono le informazioni che ti sono state date.</p>
+    <p style="font-size: 18px; max-width: 52ch; color: var(--color-neutral-800); margin-bottom: 44px">Ogni famiglia arriva a me con la stessa frase: «<i>Abbiamo già provato di tutto</i>». Quasi sempre il problema non è il bambino. E nemmeno il genitore.<br>Il problema sono le informazioni che ti sono state date.</p>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
       <div class="card" style="background:var(--color-surface);border-radius:var(--radius-lg);padding:28px">
         <div style="width:44px;height:44px;border-radius:999px;background:var(--color-bg);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);margin-bottom:16px">01</div>
@@ -252,23 +255,31 @@
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-bottom:26px">
       <sc-for list="{{ videos }}" as="v" hint-placeholder-count="10">
         <div>
-        <div style="position:relative;border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:9/16;background:var(--color-neutral-200);box-shadow:var(--shadow-sm)">
+        <div style="position:relative;border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:3/2;background:var(--color-neutral-200);box-shadow:var(--shadow-sm)">
           <sc-if value="{{ v.playing }}" hint-placeholder-val="{{ false }}">
             <iframe src="{{ v.embed }}" title="Video testimonianza NeoNanna" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
           </sc-if>
           <sc-if value="{{ v.idle }}" hint-placeholder-val="{{ true }}">
-            <button type="button" onClick="{{ v.onPlay }}" aria-label="Guarda la video testimonianza" style="position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:transparent;cursor:pointer;display:block" style-hover="opacity:.94">
-              <sc-if value="{{ v.thumb }}" hint-placeholder-val="{{ false }}">
-                <img src="{{ v.thumb }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
-              </sc-if>
-              <span style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,color-mix(in srgb,#33251f 78%,transparent) 100%)"></span>
-              <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:999px;background:var(--color-accent);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md)">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--color-bg)"><path d="M8 5l12 7-12 7z"></path></svg>
+            <button type="button" onClick="{{ v.onPlay }}" aria-label="Guarda la video testimonianza di {{ v.name }}" style="position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:transparent;cursor:pointer;display:block" style-hover="opacity:.94">
+              <img src="{{ v.thumb }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ v.pos }}">
+              <span style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,color-mix(in srgb,#33251f 35%,transparent) 68%,color-mix(in srgb,#33251f 88%,transparent) 100%)"></span>
+              <span style="position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:999px;background:var(--color-bg);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md)">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="var(--color-accent-700)"><path d="M8 5l12 7-12 7z"></path></svg>
               </span>
+              <span style="position:absolute;top:8px;left:8px;width:26px;height:26px;border-radius:999px;background:var(--color-bg);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm)">
+                <img src="assets/logo-neonanna.png" alt="" style="height:14px;width:auto">
+              </span>
+              <sc-if value="{{ v.result }}" hint-placeholder-val="{{ false }}">
+                <span style="position:absolute;left:0;right:0;bottom:0;padding:8px 9px 9px">
+                  <span style="display:block;font-size:11.5px;line-height:1.32;color:#fff;font-style:italic">«{{ v.result }}»</span>
+                </span>
+              </sc-if>
             </button>
           </sc-if>
         </div>
-        <div style="font-size:13px;line-height:1.35;color:var(--color-neutral-700);margin-top:10px">{{ v.label }}</div>
+        <div style="margin-top:10px">
+          <div style="font-size:14px;font-weight:700;color:var(--color-text);line-height:1.3">{{ v.name }}</div>
+        </div>
         </div>
       </sc-for>
     </div>
@@ -302,7 +313,7 @@
         <div style="color:var(--color-accent);letter-spacing:2px">★★★★★</div>
         <div style="font-family:var(--font-heading);font-size:22px;line-height:1.2">«Siamo rinati»</div>
         <p style="margin:0;font-size:16px;color:var(--color-neutral-800)">«Ero sfinita, priva di forze e completamente scoraggiata. Oggi ho ritrovato l'energia e la voglia di essere mamma. Molte notti mia figlia nemmeno si risveglia più dalla messa a nanna.»</p>
-        <div style="margin-top:auto;padding-top:14px;border-top:1px solid var(--color-divider);font-size:14px;color:var(--color-neutral-700)">Cecilia, mamma di una bimba<br><span style="color:var(--color-accent-2-700);font-weight:600">Recensione verificata su Facebook</span></div>
+        <div style="margin-top:auto;padding-top:14px;border-top:1px solid var(--color-divider);font-size:14px;color:var(--color-neutral-700)">Cecilia, mamma di Elena (11 mesi)<br><span style="color:var(--color-accent-2-700);font-weight:600">Recensione verificata su Facebook</span></div>
       </div>
       <div class="card" style="background:var(--color-neutral-100);border-radius:var(--radius-lg);padding:28px;display:flex;flex-direction:column;gap:14px">
         <div style="color:var(--color-accent);letter-spacing:2px">★★★★★</div>
@@ -419,132 +430,7 @@
     </div>
   </footer>
 
-  <section style="background:var(--color-surface);padding:88px 40px">
-    <div style="max-width:1240px;margin:0 auto">
-      <div style="font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:12px">Anteprima mobile</div>
-      <h2 style="font-size:36px;margin-bottom:12px">La stessa pagina, pensata per una mano sola</h2>
-      <p style="font-size:17px;color:var(--color-neutral-800);max-width:56ch;margin-bottom:44px">Testo mai sotto i 17px, un solo pulsante per schermata, CTA sticky in basso sempre raggiungibile col pollice.</p>
-      <div style="display:flex;gap:32px;flex-wrap:wrap">
 
-        <div style="width:390px;height:760px;background:var(--color-bg);border-radius:38px;box-shadow:var(--shadow-lg);overflow:hidden;position:relative;flex:0 0 390px">
-          <div style="padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--color-divider)">
-            <img src="assets/logo-neonanna.png" alt="NeoNanna" style="height:38px;width:auto">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-text)" stroke-width="2.75" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
-          </div>
-          <div style="padding:24px 20px 110px">
-            <h3 style="font-size:32px;line-height:1.08;margin:0 0 10px">Aiuto le mamme a ritrovare il riposo e la gioia della maternità</h3>
-            <p style="font-size:18px;color:#7d4438;margin:0 0 8px;font-weight:600">Tuo figlio può dormire. E tu con lui.</p>
-            <p style="font-size:17px;color:var(--color-neutral-800);margin:0">3 videolezioni gratuite: perché si sveglia e cosa fare da stanotte.</p>
-            <img src="assets/hero-abbraccio-terra-v8.jpg" data-hero-img="1" alt="" style="width:100%;height:210px;object-fit:cover;object-position:70% 45%;border-radius:var(--radius-lg);margin-top:18px">
-            <div style="display:flex;gap:18px;margin-top:20px">
-              <div><div style="font-family:var(--font-heading);font-size:24px">200+</div><div style="font-size:13px;color:var(--color-neutral-700)">famiglie</div></div>
-              <div><div style="font-family:var(--font-heading);font-size:24px">99%</div><div style="font-size:13px;color:var(--color-neutral-700)">successo</div></div>
-            </div>
-          </div>
-          <div style="position:absolute;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--color-bg) 94%,transparent);backdrop-filter:blur(6px);border-top:1px solid var(--color-divider);padding:14px 20px 20px">
-            <a href="https://masterclass.neonanna.it" class="btn btn-primary btn-block" style="font-size:17px;border-radius:999px;padding:18px;width:100%">Guarda le videolezioni gratuite</a>
-          </div>
-        </div>
-
-        <div style="width:390px;height:760px;background:var(--color-accent-2-200);border-radius:38px;box-shadow:var(--shadow-lg);overflow:hidden;position:relative;flex:0 0 390px">
-          <div style="padding:32px 20px 110px">
-            <div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-2-700)">3 videolezioni gratuite</div>
-            <h3 style="font-size:32px;line-height:1.08;margin:14px 0 10px">Mamma, Aiutami a Dormire</h3>
-            <p style="font-size:16px;color:var(--color-neutral-800)">Tre video brevi, nell'ordine giusto.</p>
-            <div style="display:flex;flex-direction:column;gap:12px;margin-top:22px">
-              <div style="display:flex;gap:14px;align-items:center;background:var(--color-neutral-100);border-radius:var(--radius-md);padding:16px 18px"><div style="width:40px;height:40px;flex:0 0 40px;border-radius:999px;background:var(--color-accent-2-300);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading)">1</div><div style="font-size:17px;font-weight:600">Le cause nascoste dei problemi di sonno</div></div>
-              <div style="display:flex;gap:14px;align-items:center;background:var(--color-neutral-100);border-radius:var(--radius-md);padding:16px 18px"><div style="width:40px;height:40px;flex:0 0 40px;border-radius:999px;background:var(--color-accent-2-300);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading)">2</div><div style="font-size:17px;font-weight:600">Le 5 convinzioni che bloccano i genitori</div></div>
-              <div style="display:flex;gap:14px;align-items:center;background:var(--color-neutral-100);border-radius:var(--radius-md);padding:16px 18px"><div style="width:40px;height:40px;flex:0 0 40px;border-radius:999px;background:var(--color-accent-2-300);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading)">3</div><div style="font-size:17px;font-weight:600">Azioni concrete da mettere in pratica subito</div></div>
-            </div>
-            <div style="background:var(--color-neutral-100);border-radius:var(--radius-md);padding:16px 20px;margin-top:16px">
-              <div style="color:var(--color-accent);letter-spacing:2px;margin-bottom:6px">★★★★★</div>
-              <p style="margin:0;font-size:16px;color:var(--color-neutral-800)">«Dalla prima notte ha dormito senza risvegli.»</p>
-              <div style="font-size:14px;color:var(--color-accent-2-700);font-weight:600;margin-top:8px">Elisa, mamma di Beatrice (6 mesi)</div>
-            </div>
-          </div>
-          <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 20px;background:color-mix(in srgb,var(--color-accent-2-200) 94%,transparent)">
-            <a href="https://masterclass.neonanna.it" class="btn btn-primary btn-block" style="font-size:17px;border-radius:999px;padding:18px;width:100%">Guarda ora, è gratis</a>
-          </div>
-        </div>
-
-        <div style="width:390px;height:760px;background:var(--color-bg);border-radius:38px;box-shadow:var(--shadow-lg);overflow:hidden;position:relative;flex:0 0 390px">
-          <div style="padding:32px 20px 110px">
-            <h3 style="font-size:32px;line-height:1.1;margin-bottom:8px">Da 4-5 risvegli a notte a 0 in 3 giorni</h3>
-            <p style="font-size:16px;color:var(--color-neutral-800)">Lars, 13 mesi · caso reale</p>
-            <div style="background:var(--color-neutral-100);border-radius:var(--radius-lg);padding:22px;margin-top:18px;display:flex;align-items:center;gap:16px">
-              <div><div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-600)">Prima</div><div style="font-family:var(--font-heading);font-size:36px;line-height:1.1">4-5</div></div>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.75" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
-              <div><div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent-700)">Dopo</div><div style="font-family:var(--font-heading);font-size:36px;line-height:1.1;color:var(--color-accent-700)">0</div></div>
-            </div>
-            <div style="background:var(--color-surface);border-radius:var(--radius-lg);padding:22px;margin-top:14px">
-              <div style="color:var(--color-accent);letter-spacing:2px;margin-bottom:8px">★★★★★</div>
-              <p style="margin:0;font-size:16px;color:var(--color-neutral-800)">«Dal terzo giorno si è addormentata da sola nella sua cameretta e ha dormito tutta la notte senza un risveglio.»</p>
-              <div style="font-size:14px;color:var(--color-accent-2-700);font-weight:600;margin-top:12px">Alice, mamma di Zoe (6 mesi) · Facebook</div>
-            </div>
-            <a href="https://www.facebook.com/NeoNannaDolceDormire/reviews" style="display:block;font-size:16px;font-weight:700;color:var(--color-accent-700);text-decoration:none;margin-top:16px">Leggi tutte le recensioni →</a>
-          </div>
-          <div style="position:absolute;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--color-bg) 94%,transparent);backdrop-filter:blur(6px);border-top:1px solid var(--color-divider);padding:14px 20px 20px">
-            <a href="https://masterclass.neonanna.it" class="btn btn-primary btn-block" style="font-size:17px;border-radius:999px;padding:18px;width:100%">Guarda le videolezioni gratuite</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <sc-if value="{{ showAppendix }}" hint-placeholder-val="{{ true }}">
-  <section style="background:var(--color-neutral-100);padding:88px 40px 96px">
-    <div style="max-width:1080px;margin:0 auto">
-      <div style="font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:12px">Allegato</div>
-      <h2 style="font-size:40px;margin-bottom:44px">Guida di stile, pagine interne e note di copy</h2>
-
-      <h3 style="font-size:26px;margin-bottom:18px">1. Colori</h3>
-      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:20px">
-        <div><div style="height:76px;border-radius:var(--radius-md);background:var(--color-bg);border:1px solid var(--color-divider)"></div><div style="font-size:13px;margin-top:8px"><strong>Bianco caldo</strong><br>#fdf8f5</div></div>
-        <div><div style="height:76px;border-radius:var(--radius-md);background:var(--color-surface)"></div><div style="font-size:13px;margin-top:8px"><strong>Cipria</strong><br>#f6e7e1</div></div>
-        <div><div style="height:76px;border-radius:var(--radius-md);background:var(--color-accent)"></div><div style="font-size:13px;margin-top:8px"><strong>Terracotta logo</strong><br>#a86a5b</div></div>
-        <div><div style="height:76px;border-radius:var(--radius-md);background:var(--color-accent-2-300)"></div><div style="font-size:13px;margin-top:8px"><strong>Cipria scura</strong><br>#f1dcd4</div></div>
-        <div><div style="height:76px;border-radius:var(--radius-md);background:var(--color-accent-2)"></div><div style="font-size:13px;margin-top:8px"><strong>Cipria media</strong><br>#d9b3a8</div></div>
-        <div><div style="height:76px;border-radius:var(--radius-md);background:var(--color-neutral-900)"></div><div style="font-size:13px;margin-top:8px"><strong>Inchiostro</strong><br>#2e2b25</div></div>
-      </div>
-      <p style="font-size:16px;color:var(--color-neutral-800);max-width:70ch">Una sola famiglia, tre gradini: bianco caldo (fondo pagina) → cipria (blocchi tinti) → terracotta (azioni). Niente beige giallo, niente verde. I titoli sono in bruno caldo #7d4438, il testo in bruno-grigio #4a3a35. Le card sui blocchi tinti sono bianco puro caldo. L'unico blocco pieno di colore è la CTA finale.</p>
-
-      <h3 style="font-size:26px;margin:44px 0 18px">2. Tipografia</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start">
-        <div style="background:var(--color-bg);border-radius:var(--radius-lg);padding:28px">
-          <div style="font-family:var(--font-heading);font-size:44px;line-height:1.05">Titoli in serif elegante</div>
-          <p style="font-size:15px;color:var(--color-neutral-700);margin:12px 0 0">Serif editoriale (Playfair Display), peso 600. H1 60px · H2 40px · H3 26px. Sempre allineati a sinistra, righe corte (max 24 caratteri), interlinea stretta. I pulsanti restano in sans-serif per leggibilità.</p>
-        </div>
-        <div style="background:var(--color-bg);border-radius:var(--radius-lg);padding:28px">
-          <div style="font-size:26px;font-weight:600">Corpo del testo sans-serif</div>
-          <p style="font-size:15px;color:var(--color-neutral-700);margin:12px 0 0">Base 17px desktop e mobile, intro 20px, note 14px. Paragrafi larghi max 52 caratteri.</p>
-        </div>
-      </div>
-
-      <h3 style="font-size:26px;margin:44px 0 18px">3. Stile immagini</h3>
-      <p style="font-size:16px;color:var(--color-neutral-800);max-width:70ch">Luce naturale, ambienti reali, palette calda e desaturata; mai foto stock. Angoli molto arrotondati, un lato tondo per l'immagine hero. Le foto passano dal trattamento «washed» (leggermente desaturate) per non competere col fondo caldo. Serve almeno: 1 ritratto verticale di Debora, 2 scatti con bambini in braccio, 1 scatto di lavoro/studio, 3 frame per le video testimonianze.</p>
-
-      <h3 style="font-size:26px;margin:44px 0 18px">4. Pagine interne</h3>
-      <div style="display:flex;flex-direction:column;gap:14px">
-        <div style="background:var(--color-bg);border-radius:var(--radius-md);padding:24px 28px"><strong style="font-size:18px">La mia storia</strong><p style="margin:8px 0 0;font-size:16px;color:var(--color-neutral-800)">Racconto in prima persona a sezioni brevi (il prima, il punto di svolta, la certificazione, oggi), un ritratto grande all'apertura, chiusura con CTA videolezioni. Nessuna CTA verso PDF o chiamata.</p></div>
-        <div style="background:var(--color-bg);border-radius:var(--radius-md);padding:24px 28px"><strong style="font-size:18px">Servizi</strong><p style="margin:8px 0 0;font-size:16px;color:var(--color-neutral-800)">Due schede a confronto (0–6 mesi / 6 mesi–6 anni), cosa include, per chi è e per chi non è, la garanzia «senza limiti di tempo» come badge in evidenza, FAQ di acquisto in fondo. Banner videolezioni in cima per chi non è ancora pronto.</p></div>
-        <div style="background:var(--color-bg);border-radius:var(--radius-md);padding:24px 28px"><strong style="font-size:18px">Testimonianze</strong><p style="margin:8px 0 0;font-size:16px;color:var(--color-neutral-800)">L'archivio completo delle recensioni Facebook: griglia a colonne con filtro per età del bambino, video testimonianze in cima, i casi con numeri («da 4 risvegli a 0 in 9 giorni») fissati come prima riga. Widget recensioni fluttuante rimosso: pesa e infastidisce su mobile.</p></div>
-        <div style="background:var(--color-bg);border-radius:var(--radius-md);padding:24px 28px"><strong style="font-size:18px">Contatti</strong><p style="margin:8px 0 0;font-size:16px;color:var(--color-neutral-800)">Form corto (nome, età del bambino, problema principale, contatto) più WhatsApp diretto. La chiamata gratuita si prenota solo da qui e dopo le videolezioni, non dalla homepage.</p></div>
-        <div style="background:var(--color-bg);border-radius:var(--radius-md);padding:24px 28px"><strong style="font-size:18px">FAQ</strong><p style="margin:8px 0 0;font-size:16px;color:var(--color-neutral-800)">Accordion per gruppi (metodo, età, allattamento, tempi, costi). In fondo: «Non hai trovato la risposta? Inizia dalle videolezioni gratuite».</p></div>
-        <div style="background:var(--color-bg);border-radius:var(--radius-md);padding:24px 28px"><strong style="font-size:18px">Blog</strong><p style="margin:8px 0 0;font-size:16px;color:var(--color-neutral-800)">Griglia per categoria (risvegli, pisolini, routine, età), articolo con indice laterale e un blocco videolezioni a metà lettura più uno in chiusura.</p></div>
-      </div>
-
-      <h3 style="font-size:26px;margin:44px 0 18px">5. Note di copy</h3>
-      <div style="display:flex;flex-direction:column;gap:14px;max-width:80ch">
-        <p style="margin:0;font-size:16px;color:var(--color-neutral-800)"><strong>Hero:</strong> promessa + rassicurazione, mai «scarica la guida». Il magnete si chiama «Mamma, Aiutami a Dormire» e si descrive come «3 videolezioni gratuite»: «masterclass» resta solo il nome del dominio, «percorso» è riservato ai servizi a pagamento.</p>
-        <p style="margin:0;font-size:16px;color:var(--color-neutral-800)"><strong>CTA:</strong> una sola azione primaria in tutta la pagina — «Guarda le videolezioni gratuite» → masterclass.neonanna.it. La chiamata gratuita compare solo come passo successivo, in coda alla CTA finale.</p>
-        <p style="margin:0;font-size:16px;color:var(--color-neutral-800)"><strong>Menzioni stampa:</strong> la formula corretta è «Il metodo Sleep Sense®, di cui sono consulente certificata, è stato riconosciuto da…». Mai lasciar intendere che le testate abbiano parlato di NeoNanna.</p>
-        <p style="margin:0;font-size:16px;color:var(--color-neutral-800)"><strong>Numeri:</strong> 200+ famiglie e 99% di successo sempre vicini alla prova (testimonianze, caso studio), mai da soli.</p>
-        <p style="margin:0;font-size:16px;color:var(--color-neutral-800)"><strong>Tono:</strong> «tu» singolare, frasi brevi, zero gergo tecnico; empatia in apertura, concretezza subito dopo.</p>
-      </div>
-    </div>
-  </section>
-  </sc-if>
 
 </div>
 
@@ -580,7 +466,7 @@ class Component extends DCLogic {
   };
   static SLOTS = {
     storia: {
-      "Bimbo in braccio": ["assets/hero-braccio.jpg", "55% 28%"],
+      "Bimbo in braccio": ["assets/hero-braccio.jpg", "55% 50%"],
       "Ritratto con orsetto": ["assets/ritratto-orsetto.jpg", "50% 25%"],
       "Alla scrivania col bimbo": ["assets/scrivania-bimbo.jpg", "50% 40%"],
       "In cucina": ["assets/cucina.jpg", "45% 45%"],
@@ -625,21 +511,21 @@ class Component extends DCLogic {
     });
   }
   static VIDEOS = [
-    ["411lPNR53y8", "Veronica, mamma di Sofia · 7 mesi"],
-    ["GxquK2aYAEI", "Elena, mamma di Nicolò · 8 mesi"],
-    ["Zhz5Zw1faLg", "Tiziana, mamma di Emma · 6 mesi"],
-    ["C-EmfuITSW8", "Sabra, mamma di Eva · 12 mesi"],
-    ["W5J67_MeI5A", "Elena, mamma di Giulio · 9 mesi"],
-    ["7xbC_X9wFIo", "Chiara, mamma di Alba · 7 mesi"],
-    ["bOFmUmoIHdk", "Silvia, mamma di Tommaso · 7 mesi"],
-    ["kvjnXJ9kHlw", "Cristina, mamma di Elia · 12 mesi"],
-    ["ymrfs_Vb_Jk", "Michela, mamma di Alberto · 16 mesi"],
-    ["8W1qzy3g16U", "Erika, mamma di Noemi · 7 mesi"]
+    ["411lPNR53y8", "Veronica, mamma di Sofia · 7 mesi", "Ha iniziato a dormire fin dalla prima notte"],
+    ["GxquK2aYAEI", "Elena, mamma di Nicolò · 8 mesi", "Una svolta nella nostra esperienza come genitori", "50% 22%"],
+    ["Zhz5Zw1faLg", "Tiziana, mamma di Emma · 6 mesi", "La mia bambina dorme 11 ore a notte"],
+    ["C-EmfuITSW8", "Sabra, mamma di Eva · 12 mesi", "Ora dorme 11 ore filate"],
+    ["W5J67_MeI5A", "Elena, mamma di Giulio · 9 mesi", "Ha iniziato a dormire 12 ore di fila"],
+    ["7xbC_X9wFIo", "Chiara, mamma di Alba · 7 mesi", "La situazione si è ribaltata in due sole notti"],
+    ["bOFmUmoIHdk", "Silvia, mamma di Tommaso · 7 mesi", "Le notti tranquille sono possibili", "50% 65%"],
+    ["kvjnXJ9kHlw", "Cristina, mamma di Elia · 12 mesi", "Alla terza notte ha dormito tutta la notte", "50% 45%"],
+    ["ymrfs_Vb_Jk", "Michela, mamma di Alberto · 16 mesi", "Non esistono bambini più bravi o meno bravi nel sonno", "50% 42%"],
+    ["8W1qzy3g16U", "Erika, mamma di Noemi · 7 mesi", "Dopo poche notti ha iniziato a dormire tutta la notte"]
   ];
   state = { playing: null };
   renderVals() {
-    const videos = Component.VIDEOS.map(([id, label]) => ({
-      id, label,
+    const videos = Component.VIDEOS.map(([id, name, result, pos]) => ({
+      id, name, result: result || "", pos: pos || "50% 29%",
       thumb: "https://i.ytimg.com/vi/" + id + "/oardefault.jpg",
       embed: "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0&playsinline=1",
       playing: this.state.playing === id,
@@ -648,8 +534,7 @@ class Component extends DCLogic {
     }));
     return {
       videos,
-      showPressStrip: this.props.showPressStrip ?? true,
-      showAppendix: this.props.showAppendix ?? true
+      showPressStrip: this.props.showPressStrip ?? true
     };
   }
 }

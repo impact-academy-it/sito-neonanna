@@ -9,6 +9,7 @@
 <x-dc>
 <helmet>
 <link rel="stylesheet" href="_ds/organic-4025a648-f606-4133-8b17-8c0d12034af1/styles.css">
+<link rel="stylesheet" href="mobile.css">
 <script src="_ds/organic-4025a648-f606-4133-8b17-8c0d12034af1/_ds_bundle.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&amp;display=swap">
@@ -46,16 +47,18 @@
   </div>
 
   <header style="background:color-mix(in srgb, var(--color-bg) 92%, transparent);border-bottom:1px solid var(--color-divider)">
-    <div style="max-width:1240px;margin:0 auto;padding:14px 40px;display:flex;align-items:center;gap:32px">
-      <a href="index.html" style="display:flex;align-items:center"><img src="assets/logo-neonanna.png" alt="NeoNanna" style="height:54px;width:auto"></a>
-      <nav style="display:flex;gap:26px;margin-left:auto;font-size:15px;font-weight:600;align-items:center">
+    <div class="site-header-row" style="max-width:1240px;margin:0 auto;padding:14px 40px;display:flex;align-items:center;gap:32px">
+      <a href="index.html" class="site-logo" style="display:flex;align-items:center"><img src="assets/logo-neonanna.png" alt="NeoNanna" style="height:54px;width:auto"></a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+      <label for="nav-toggle" class="nav-toggle-label" aria-label="Apri il menu">☰</label>
+      <nav class="site-nav" style="display:flex;gap:26px;margin-left:auto;font-size:15px;font-weight:600;align-items:center">
         <a href="index.html" style="color:var(--color-text);text-decoration:none">Home</a>
         <a href="percorso.html" style="color:var(--color-text);text-decoration:none">Il percorso</a>
         <a href="chi-sono.html" style="color:var(--color-text);text-decoration:none">Chi sono</a>
         <a href="casi-studio.html" style="color:var(--color-text);text-decoration:none">Casi studio</a>
         <a href="faq.html" style="color:var(--color-text);text-decoration:none">FAQ</a>
       </nav>
-      <a href="https://masterclass.neonanna.it" class="btn btn-primary" style="font-size:15px;border-radius:999px;padding:12px 22px;white-space:nowrap">Videolezioni gratuite</a>
+      <a href="https://masterclass.neonanna.it" class="btn btn-primary site-nav-cta" style="font-size:15px;border-radius:999px;padding:12px 22px;white-space:nowrap">Videolezioni gratuite</a>
     </div>
   </header>
 

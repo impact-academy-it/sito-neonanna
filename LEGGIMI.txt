@@ -1,0 +1,31 @@
+NeoNanna — sito statico
+=======================
+
+Contenuto
+---------
+index.html        Home
+chi-sono.html     Chi sono
+percorso.html     Il percorso
+casi-studio.html  Casi studio (con filtri per età e problema)
+faq.html          Domande frequenti
+assets/           Tutte le fotografie e il logo
+_ds/              Fogli di stile del design system
+support.js        Runtime necessario alle pagine
+
+Come pubblicarlo su Vercel
+--------------------------
+1. Installare la CLI:  npm i -g vercel
+2. Dalla cartella del sito:  vercel
+3. Per la produzione:  vercel --prod
+
+Oppure caricare questa cartella in un repository GitHub e collegarlo a Vercel
+(Add New → Project → Import Git Repository). Nessun build step: è HTML statico,
+framework "Other", output directory la radice.
+
+Note per lo sviluppatore
+------------------------
+- Le pagine sono HTML statico con stili inline: nessuna dipendenza, nessun build.
+- support.js va servito accanto alle pagine (è già incluso).
+- Le foto in assets/ sono ad alta risoluzione: prima della messa online conviene
+  ricomprimerle in JPEG/WebP (max ~1800px di lato, qualità 70-80).
+- Manca la versione mobile ottimizzata: le griglie sono desktop-first.

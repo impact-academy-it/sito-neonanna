@@ -257,7 +257,12 @@
         <div>
         <div style="position:relative;border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:3/2;background:var(--color-neutral-200);box-shadow:var(--shadow-sm)">
           <sc-if value="{{ v.playing }}" hint-placeholder-val="{{ false }}">
-            <iframe src="{{ v.embed }}" title="Video testimonianza NeoNanna" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+            <div style="position:fixed;inset:0;z-index:100;background:rgba(51,37,31,.92);display:flex;align-items:center;justify-content:center;padding:24px">
+              <div style="position:relative;width:100%;max-width:420px;aspect-ratio:9/16;max-height:88vh;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);background:#000">
+                <iframe src="{{ v.embed }}" title="Video testimonianza NeoNanna" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+              </div>
+              <button type="button" onClick="{{ v.onClose }}" aria-label="Chiudi il video" style="position:fixed;top:20px;right:20px;width:48px;height:48px;border-radius:999px;background:rgba(255,255,255,.15);border:0;color:#fff;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:101">✕</button>
+            </div>
           </sc-if>
           <sc-if value="{{ v.idle }}" hint-placeholder-val="{{ true }}">
             <button type="button" onClick="{{ v.onPlay }}" aria-label="Guarda la video testimonianza di {{ v.name }}" style="position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:transparent;cursor:pointer;display:block" style-hover="opacity:.94">
@@ -321,6 +326,9 @@
         <p style="margin:0;font-size:16px;color:var(--color-neutral-800)">«La nostra bimba di sei mesi si svegliava ogni ora da mesi. Dalla prima notte Beatrice ha dormito serenamente senza risvegli, con addormentamenti dolci e pisolini regolari durante il giorno.»</p>
         <div style="margin-top:auto;padding-top:14px;border-top:1px solid var(--color-divider);font-size:14px;color:var(--color-neutral-700)">Elisa, mamma di Beatrice (6 mesi)<br><span style="color:var(--color-accent-2-700);font-weight:600">Recensione verificata su Facebook</span></div>
       </div>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:36px">
+      <a href="https://www.facebook.com/NeoNannaDolceDormire/reviews" class="btn btn-secondary" style="font-size:16px;border-radius:999px;padding:14px 28px;text-decoration:none">Leggi tutte le recensioni →</a>
     </div>
     <p style="font-size:15px;color:var(--color-neutral-700);margin-top:20px">Estratti dalle recensioni pubbliche della pagina Facebook «NeoNanna Dolce Dormire»: in homepage sei stralci, l'archivio completo con i testi integrali vive nella pagina Testimonianze. I video in alto sono registrazioni dei genitori a percorso finito.</p>
   </section>
@@ -529,7 +537,8 @@ class Component extends DCLogic {
       embed: "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0&playsinline=1",
       playing: this.state.playing === id,
       idle: this.state.playing !== id,
-      onPlay: () => this.setState({ playing: id })
+      onPlay: () => this.setState({ playing: id }),
+      onClose: () => this.setState({ playing: null })
     }));
     return {
       videos,

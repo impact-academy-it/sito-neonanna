@@ -86,6 +86,13 @@
   [style*="gap:64px"], [style*="gap: 64px"] { gap: 24px !important; }
   [style*="gap:48px"], [style*="gap: 48px"] { gap: 20px !important; }
 
+  /* numbered lesson rows: badge beside text leaves too little room for long
+     words (e.g. "convinzioni"), forcing a mid-word break; stack instead */
+  [style*="padding:22px 26px"], [style*="padding: 22px 26px"] {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
   /* section side padding of 40px leaves too little content width on mobile */
   [style*="padding:0 40px"], [style*="padding: 0 40px"],
   [style*="padding:10px 40px"], [style*="padding: 10px 40px"],

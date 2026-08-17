@@ -86,6 +86,12 @@
   [style*="gap:64px"], [style*="gap: 64px"] { gap: 24px !important; }
   [style*="gap:48px"], [style*="gap: 48px"] { gap: 20px !important; }
 
+  /* masterclass pink block: 56px side padding wastes too much width on mobile */
+  [style*="padding:64px 56px"], [style*="padding: 64px 56px"] {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
   /* numbered lesson rows: badge beside text leaves too little room for long
      words (e.g. "convinzioni"), forcing a mid-word break; stack instead */
   [style*="padding:22px 26px"], [style*="padding: 22px 26px"] {

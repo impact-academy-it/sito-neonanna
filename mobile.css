@@ -104,8 +104,11 @@
     gap: 10px !important;
   }
 
-  /* section side padding of 40px leaves too little content width on mobile */
+  /* section side padding of 40px leaves too little content width on mobile.
+     Note: the runtime also rewrites a bare "0" value to "0px" (padding:0 40px
+     becomes padding: 0px 40px), so both forms are listed everywhere it matters. */
   [style*="padding:0 40px"], [style*="padding: 0 40px"],
+  [style*="padding:0px 40px"], [style*="padding: 0px 40px"],
   [style*="padding:10px 40px"], [style*="padding: 10px 40px"],
   [style*="padding:14px 40px"], [style*="padding: 14px 40px"],
   [style*="padding:34px 40px"], [style*="padding: 34px 40px"],
@@ -119,5 +122,50 @@
   [style*="padding:96px 40px"], [style*="padding: 96px 40px"] {
     padding-left: 20px !important;
     padding-right: 20px !important;
+  }
+
+  /* --- Vertical rhythm --- desktop spacing between sections (44-96px) is
+     proportionally huge on a phone screen and reads as dead empty space.
+     Selectors target only the leading value of margin/padding shorthands,
+     so they apply no matter what follows (0, 8px, another value...). The
+     runtime rewrites a trailing bare "0" to "0px", hence the "0px" forms. */
+  [style*="margin:44px auto 0"], [style*="margin: 44px auto 0"] { margin-top: 32px !important; }
+  [style*="margin:64px auto 0"], [style*="margin: 64px auto 0"] { margin-top: 40px !important; }
+  [style*="margin:80px auto 0"], [style*="margin: 80px auto 0"] { margin-top: 48px !important; }
+  [style*="margin:88px auto 0"], [style*="margin: 88px auto 0"] { margin-top: 48px !important; }
+  [style*="margin:96px auto 0"], [style*="margin: 96px auto 0"] { margin-top: 56px !important; }
+
+  /* same rhythm fix for sections that set margin-top as its own property
+     instead of the margin:Npx auto 0 shorthand */
+  [style*="margin-top:64px"], [style*="margin-top: 64px"] { margin-top: 40px !important; }
+  [style*="margin-top:80px"], [style*="margin-top: 80px"] { margin-top: 48px !important; }
+  [style*="margin-top:88px"], [style*="margin-top: 88px"] { margin-top: 48px !important; }
+
+  [style*="padding:34px "], [style*="padding: 34px "] { padding-top: 24px !important; }
+  [style*="padding:38px "], [style*="padding: 38px "] { padding-top: 28px !important; }
+  [style*="padding:48px "], [style*="padding: 48px "] { padding-top: 32px !important; }
+  [style*="padding:64px "], [style*="padding: 64px "] { padding-top: 40px !important; }
+  [style*="padding:72px "], [style*="padding: 72px "] { padding-top: 44px !important; }
+  [style*="padding:80px "], [style*="padding: 80px "] { padding-top: 48px !important; }
+  [style*="padding:88px "], [style*="padding: 88px "] { padding-top: 48px !important; }
+  [style*="padding:96px "], [style*="padding: 96px "] { padding-top: 56px !important; }
+
+  /* closing CTA boxes (accent-colored, padding:72/80px 64px) also need
+     their side padding tightened — the 64px pairing isn't covered above.
+     Set all four sides explicitly so top/bottom stay symmetric. */
+  [style*="padding:72px 64px"], [style*="padding: 72px 64px"] { padding: 44px 24px !important; }
+  [style*="padding:80px 64px"], [style*="padding: 80px 64px"] { padding: 48px 24px !important; }
+
+  /* --- Card padding --- 34-44px of internal padding around a couple of
+     lines of text leaves too much empty margin inside cards on a narrow
+     phone; one consistent, tighter value reads calmer and more uniform */
+  [style*="padding:44px;"], [style*="padding: 44px;"],
+  [style*="padding:40px;"], [style*="padding: 40px;"],
+  [style*="padding:38px;"], [style*="padding: 38px;"] {
+    padding: 24px !important;
+  }
+  [style*="padding:34px;"], [style*="padding: 34px;"],
+  [style*="padding:28px;"], [style*="padding: 28px;"] {
+    padding: 22px !important;
   }
 }

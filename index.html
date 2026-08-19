@@ -56,11 +56,9 @@
       <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
       <label for="nav-toggle" class="nav-toggle-label" aria-label="Apri il menu">☰</label>
       <nav class="site-nav" style="display:flex;gap:26px;margin-left:auto;font-size:15px;font-weight:600;align-items:center">
-        <a href="#testimonianze" style="color:var(--color-text);text-decoration:none">Testimonianze</a>
         <a href="percorso.html" style="color:var(--color-text);text-decoration:none">Il percorso</a>
-        <span style="display:flex;align-items:center;gap:5px;color:var(--color-text);cursor:default">NeoNanna
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round"><path d="M6 9l6 6 6-6"></path></svg>
-        </span>
+        <a href="casi-studio.html" style="color:var(--color-text);text-decoration:none">Casi studio</a>
+        <a href="#testimonianze" style="color:var(--color-text);text-decoration:none">Testimonianze</a>
         <a href="faq.html" style="color:var(--color-text);text-decoration:none">FAQ</a>
       </nav>
       <a href="https://masterclass.neonanna.it" class="btn btn-primary site-nav-cta" style="font-size:15px;border-radius:999px;padding:12px 22px;white-space:nowrap">Videolezioni gratuite</a>
@@ -413,10 +411,10 @@
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;font-size:15px">
         <div style="font-family:var(--font-heading);color:var(--color-neutral-100);margin-bottom:4px">NeoNanna</div>
-        <a href="#" style="color:var(--color-neutral-300);text-decoration:none">La mia storia</a>
+        <a href="chi-sono.html" style="color:var(--color-neutral-300);text-decoration:none">La mia storia</a>
         <a href="#percorsi" style="color:var(--color-neutral-300);text-decoration:none">Servizi</a>
-        <a href="#" style="color:var(--color-neutral-300);text-decoration:none">Contatti</a>
-        <a href="#" style="color:var(--color-neutral-300);text-decoration:none">FAQ</a>
+        <a href="https://wa.me/34638476672" style="color:var(--color-neutral-300);text-decoration:none">Contatti</a>
+        <a href="faq.html" style="color:var(--color-neutral-300);text-decoration:none">FAQ</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;font-size:15px">
         <div style="font-family:var(--font-heading);color:var(--color-neutral-100);margin-bottom:4px">Risorse</div>
@@ -546,6 +544,25 @@ class Component extends DCLogic {
     };
   }
 }
+</script>
+<script>
+(function () {
+  if (!location.hash) return;
+  var id = location.hash.slice(1);
+  var tries = 0, stableHits = 0, lastTop = null;
+  var poll = setInterval(function () {
+    tries++;
+    var el = document.getElementById(id);
+    if (el) {
+      var top = el.getBoundingClientRect().top;
+      el.scrollIntoView();
+      stableHits = (lastTop !== null && Math.abs(top - lastTop) < 2) ? stableHits + 1 : 0;
+      lastTop = top;
+      if (stableHits >= 2) { clearInterval(poll); return; }
+    }
+    if (tries >= 60) clearInterval(poll);
+  }, 150);
+})();
 </script>
 </body>
 </html>
